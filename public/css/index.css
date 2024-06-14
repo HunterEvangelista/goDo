@@ -1,0 +1,38 @@
+:root {
+    /*primary colors*/
+    --primary-blue: #0077FF;
+    --light-blue: #66AAFF;
+    --dark-blue: #3366FF;
+    --light-gray: #CCCCCC;
+
+    /*secondary colors*/
+    --accent-green: #00FF88;
+    --accent-purple: #AA00FF;
+    --accent-orange: #FF6600;
+    --accent-red: #FF0033;
+    --accent-yellow: #FFFF00;
+
+    /*Dark Mode colors*/
+    --dark-background: #121212;
+    --dim-blue: #004488;
+    --dim-green: #008844;
+    --dim-purple: #5500AA;
+    --dim-orange: #FFA366;
+}
+
+* {
+    background-color: var(--light-gray);
+    color: var(--dark-blue);
+}
+
+.htmx-indicator {
+    opacity: 0;
+    transition: opacity 500ms ease-in;
+}
+
+.htmx-request .htmx-indicator {
+    opacity: 1
+}
+.htmx-request.htmx-indicator {
+    opacity: 1;
+}
