@@ -123,8 +123,7 @@ func main() {
 
 	page := newPage()
 	e.Renderer = newTemplate()
-	e.Static("/css", "css")
-	e.Static("/images", "images")
+	e.Static("/", "public")
 
 	e.GET("/", func(c echo.Context) error {
 		return c.Render(200, "index", page)
