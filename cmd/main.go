@@ -1,12 +1,27 @@
 package main
 
 import (
+	"context"
+	"fmt"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"go.mongodb.org/mongo-driver/mongo"
+	"godo/db"
 	"html/template"
 	"io"
+	"log"
 	"strconv"
 )
+
+var DB *mongo.Client
+
+func init() {
+	var err error
+	DB, err = db.Db()
+	if err != nil {
+		log.Panicf("Error connecting to database: %v", err)
+	}
+}
 
 type Templates struct {
 	templates *template.Template
@@ -97,6 +112,12 @@ func newPage() Page {
 }
 
 func main() {
+	err := DB.Ping(context.TODO(), nil)
+	if err != nil {
+		log.Panicf("Error connecting to database: %v", err)
+	} else {
+		fmt.Println("Connected to MongoDB!")
+	}
 	e := echo.New()
 	e.Use(middleware.Logger())
 
