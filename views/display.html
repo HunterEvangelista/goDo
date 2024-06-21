@@ -1,11 +1,10 @@
 {{ block "display" . }}
     <div id="tasks" style="display: flex; flex-direction: column; ">
-{{/*        {{ range .Tasks  }}*/}}
-{{/*            <div>*/}}
-{{/*                {{ template "task" .}}*/}}
-{{/*            </div>*/}}
-{{/*        {{ end }}*/}}
-        <div> {{ . }} </div>
+        {{ range .  }}
+            <div>
+                {{ template "task" .}}
+            </div>
+        {{ end }}
     </div>
 {{ end }}
 

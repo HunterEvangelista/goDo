@@ -11,7 +11,7 @@
     <body>
         {{ template "form" .Form}}
         <hr />
-{{/*        {{ template "display" .Tasks }}*/}}
+        {{ template "display" .Tasks }}
     <script>
         document.addEventListener("DOMContentLoaded", (event) => {
             document.body.addEventListener("htmx:beforeSwap", function(evt) {

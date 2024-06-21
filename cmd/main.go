@@ -47,7 +47,7 @@ func main() {
 	e := echo.New()
 	e.Use(middleware.Logger())
 
-	//e.Renderer = controller.NewTemplate()
+	e.Renderer = controller.NewTemplate()
 	e.Static("/", "public")
 
 	e.GET("/", controller.HomeRoute)
