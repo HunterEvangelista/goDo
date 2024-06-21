@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title></title>
+        <title>GoDo</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
@@ -11,7 +11,7 @@
     <body>
         {{ template "form" .Form}}
         <hr />
-        {{ template "display" .Data}}
+{{/*        {{ template "display" .Tasks }}*/}}
     <script>
         document.addEventListener("DOMContentLoaded", (event) => {
             document.body.addEventListener("htmx:beforeSwap", function(evt) {
