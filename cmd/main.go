@@ -54,40 +54,10 @@ func main() {
 
 	e.DELETE("/task/:id", controller.DeleteTaskRoute)
 
-	//e.POST("/contacts", func(c echo.Context) error {
-	//name := c.FormValue("name")
-	//email := c.FormValue("email")
-	//
-	//if page.Data.hasEmail(email) {
-	//	formData := newFormData()
-	//	formData.Values["name"] = name
-	//	formData.Values["email"] = email
-	//	formData.Errors["email"] = "Email already exists"
-	//	return c.Render(422, "form", formData)
-	//}
-	//contact := newContact(name, email, id)
-	//page.Data.Contacts = append(page.Data.Contacts, contact)
-	//err := c.Render(200, "form", newFormData())
-	//if err != nil {
-	//	return err
-	//}
-	//return c.Render(200, "oob-contact", contact)
-	//})
+	// TODO - add a route to add a new task
 
-	//e.DELETE("/contacts/:id", func(c echo.Context) error {
-	//	idStr := c.Param("id")
-	//	id, err := strconv.Atoi(idStr)
-	//	if err != nil {
-	//		return c.String(400, "Invalid id")
-	//	}
-	//
-	//	index := page.Data.indexOf(id)
-	//	if index == -1 {
-	//		return c.String(400, "Contact not found")
-	//	}
-	//	page.Data.Contacts = append(page.Data.Contacts[:index], page.Data.Contacts[index+1:]...)
-	//	return c.NoContent(200)
-	//})
+	// TODO - add a route to modify the state of a task
+	// TODO - create separate pages for this to be done in
 
 	if err = e.Start(":8080"); !errors.Is(err, http.ErrServerClosed) {
 		log.Fatal(err)
