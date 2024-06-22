@@ -1,14 +1,13 @@
 package controller
 
 import (
-	"github.com/labstack/echo/v4"
 	"godo/model"
 	"html/template"
 	"io"
 	"net/http"
-)
 
-//controller will communicate with pages and model to update and serve data
+	"github.com/labstack/echo/v4"
+)
 
 type Templates struct {
 	templates *template.Template
@@ -70,6 +69,5 @@ func DeleteTaskRoute(c echo.Context) error {
 	if err != nil {
 		return c.String(400, "Task not found")
 	}
-	// respond with 200
 	return c.NoContent(200)
 }

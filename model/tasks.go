@@ -2,16 +2,16 @@ package model
 
 import (
 	"context"
+	"log"
+	"regexp"
+	"strconv"
+
 	"github.com/labstack/echo/v4"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
-	"log"
-	"regexp"
-	"strconv"
 )
 
-//goland:noinspection SpellCheckingInspection
 var DBcon *mongo.Client
 
 type Task struct {
