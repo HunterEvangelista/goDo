@@ -38,10 +38,53 @@
     opacity: 1;
 }
 
+#tasks {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: space-around;
+}
+
+.task {
+    display: flex;
+    flex-direction: column-reverse;
+    margin: .5em;
+    width: 40%;
+    aspect-ratio: 3 / 1;
+}
+
+.task>.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-content: space-evenly;
+    padding: .5em;
+}
+
+.selectors {
+    display: flex;
+    flex-direction: row;
+}
+
+.selector>* {
+    cursor: pointer;
+    fill: var(--dim-blue)
+}
+
+
+.selector.edit>*:hover {
+    fill: var(--light-blue);
+}
+
+.selector.delete>*:hover {
+    fill: var(--dim-orange);
+}
+
+
 form {
     display: flex;
     flex-direction: column;
-    border: 1px solid var(--accent-purple);
 }
 
 textarea {

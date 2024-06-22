@@ -1,31 +1,47 @@
 {{ block "display" . }}
-    <div id="tasks" style="display: flex; flex-direction: column; ">
+    <div id="tasks">
         {{ range .  }}
-            <div>
-                {{ template "task" . }}
-            </div>
+            {{ template "task" . }}
         {{ end }}
     </div>
 {{ end }}
 
 {{ block "task" . }}
-    <div id="task-{{ .DisplayID }}" style="display: flex; ">
-        <div class="task" style="display: flex;">
-            <div hx-indicator="#task-{{ .DisplayID }}" hx-delete="/task/{{ .DisplayID }}" hx-swap="outerHTML swap:500ms"
-                 hx-target="closest .task" style="cursor: pointer; width: 24px; height: 24px">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path fill="none" d="M0 0h24v24H0z"/>
-                    <path d="M4 2h16a1 1 0 011 1v1a1 1 0 01-1 1H4a1 1 0 01-1-1V3a1 1 0 011-1zM3 6h18v16a1 1 0 01-1 1H4a1 1 0 01-1-1V6zm3 3v9a1 1 0 002 0v-9a1 1 0 00-2 0zm5 0v9a1 1 0 002 0v-9a1 1 0 00-2 0zm5 0v9a1 1 0 002 0v-9a1 1 0 00-2 0z"/>
+    <div id="task-{{ .DisplayID }}" class="task">
+        <div class="selectors">
+            <div
+                    class="selector edit"
+                    hx-indicator="#task-{{ .DisplayID }}"
+                    hx-swap="outerHTML swap:500ms"
+                    hx-target="closest .task"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                     fill="#e8eaed">
+                    <path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z"/>
                 </svg>
             </div>
+            <div
+                    class="selector delete"
+                    hx-indicator="#task-{{ .DisplayID }}"
+                    hx-delete="/task/{{ .DisplayID }}"
+                    hx-swap="outerHTML swap:500ms"
+                    hx-target="closest .task">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+                     fill="#e8eaed">
+                    <path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/>
+                </svg>
+            </div>
+        </div>
+        <div class="content">
             Task Name: <span>{{ .TaskName }}</span>
             Project: <span>{{ .Project }}</span>
+        </div>
 
-            <div id="ci-{{ .DisplayID }}" class="htmx-indicator" style="width: 24px; height: 24px">
-                <img src="/images/bar-chart-fill.svg"
-                     alt="loading"
-                     style="width: 24px; height: 24px">
-            </div>
+
+        <div id="ci-{{ .DisplayID }}" class="htmx-indicator" style="width: 24px; height: 24px">
+            <img src="/images/bar-chart-fill.svg"
+                 alt="loading"
+                 style="width: 24px; height: 24px">
         </div>
     </div>
 {{ end }}
