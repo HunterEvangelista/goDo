@@ -1,12 +1,11 @@
 package controller
 
 import (
+	"github.com/labstack/echo/v4"
 	"godo/model"
 	"html/template"
 	"io"
 	"net/http"
-
-	"github.com/labstack/echo/v4"
 )
 
 type Templates struct {
@@ -64,7 +63,6 @@ func CreateTask(c echo.Context) error {
 }
 
 func DeleteTaskRoute(c echo.Context) error {
-	// get id from request and pass to model
 	_, err := model.DeleteTask(c.Param("id"))
 	if err != nil {
 		return c.String(400, "Task not found")

@@ -2,6 +2,7 @@ package model
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"regexp"
 	"strconv"
@@ -28,9 +29,11 @@ type Task struct {
 type Tasks []Task
 
 func newTask(taskName, description, owner, project string, completed bool, ID primitive.ObjectID) Task {
-	re := regexp.MustCompile(`(ObjectID|\(|\)|[\!\-\&\;\:\.\,\#]*)`)
+	re := regexp.MustCompile(`(ObjectID|\(|\)|[\!\-\&\;\:\.\,\#\"\']*)`)
 	stID := primitive.ObjectID.String(ID)
 	parsedStringId := re.ReplaceAllString(stID, "")
+	fmt.Println(stID)
+	fmt.Println(parsedStringId)
 	return Task{
 		TaskName:    taskName,
 		Description: description,

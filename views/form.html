@@ -1,6 +1,6 @@
 {{/*TODO - we are accidentally replacing the form when we submit a new task*/}}
 {{ block "form" .}}
-    <form hx-post="/task" hx-swap="outerHTML">
+    <form hx-post="/task">
         <label for="taskname">
             Task Name: <input
                     {{ if .Values.taskname }} value="{{ .Values.taskname }}" {{ end }}
