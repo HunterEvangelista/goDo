@@ -55,10 +55,10 @@ func HomeRoute(c echo.Context) error {
 
 func DeleteTaskRoute(c echo.Context) error {
 	// get id from request and pass to model
-	res, err := model.DeleteTask(c.Param("id"))
+	_, err := model.DeleteTask(c.Param("id"))
 	if err != nil {
 		return c.String(400, "Task not found")
 	}
 	// respond with 200
-	return c.String(200, res)
+	return c.NoContent(200)
 }

@@ -11,7 +11,7 @@
 {{ block "task" . }}
     <div id="task-{{ .ID }}" style="display: flex; ">
         <div class="task" style="display: flex;">
-            <div hx-indicator="#id-{{ .ID }}" hx-delete="/task/{{ .ID }}" hx-swap="outerHTML swap:500ms"
+            <div hx-indicator="#task-{{ .ID }}" hx-delete="/task/{{ .ID }}" hx-swap="outerHTML swap:500ms"
                  hx-target="closest .task" style="cursor: pointer; width: 24px; height: 24px">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path fill="none" d="M0 0h24v24H0z"/>
