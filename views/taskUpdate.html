@@ -1,0 +1,38 @@
+{{ block "taskUpdate" .}}
+    <form
+        hx-post="/task/:{{ .DisplayID }}"
+        hx-swap="outerHTML"
+        class="task"
+    >
+        <label for="taskname">
+            Task Name: <input
+                    value="{{ .TaskName }}"
+                    type="text"
+                    name="taskname"
+            >
+        </label>
+        <label for="project">
+            Project: <input
+                    value="{{ .Project }}"
+                    type="text"
+                    name="project"
+            >
+        </label>
+        <span>Completion Status</span>
+        <label for="true">True</label>
+        <input type="radio"
+               id="true"
+               name="completed"
+               value="true">
+        <label for="false">False</label>
+        <input type="radio"
+               id="false"
+               name="completed"
+               value="false">
+        <span>Task Description</span>
+        <label for="description">
+            <textarea name="description">{{ .Description }}</textarea>
+        </label>
+        <button type="submit">Update</button>
+    </form>
+{{ end }}
