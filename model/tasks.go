@@ -2,11 +2,13 @@ package model
 
 import (
 	"context"
+	"github.com/labstack/echo/v4"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"log"
 	"regexp"
+	"strconv"
 )
 
 //goland:noinspection SpellCheckingInspection
@@ -18,22 +20,25 @@ type Task struct {
 	Owner       string `bson:"owner,omitempty"`
 	Project     string `bson:"project,omitempty"`
 	// TODO - add due date field
-	Completed bool   `bson:"completed"`
-	ID        string `bson:"_id"`
+	Completed bool               `bson:"completed"`
+	ID        primitive.ObjectID `bson:"_id,omitempty"`
+	DisplayID string             `bson:"displayId,omitempty"`
 }
 
 type Tasks []Task
 
-func newTask(taskName, description, owner, project string, completed bool, ID string) Task {
-	re := regexp.MustCompile(`(ObjectID|\(|\))`)
-	parsedStringId := re.ReplaceAllString(ID, "")
+func newTask(taskName, description, owner, project string, completed bool, ID primitive.ObjectID) Task {
+	re := regexp.MustCompile(`(ObjectID|\(|\)|[\!\-\&\;\:\.\,\#]*)`)
+	stID := primitive.ObjectID.String(ID)
+	parsedStringId := re.ReplaceAllString(stID, "")
 	return Task{
 		TaskName:    taskName,
 		Description: description,
 		Owner:       owner,
 		Project:     project,
 		Completed:   completed,
-		ID:          parsedStringId,
+		ID:          ID,
+		DisplayID:   parsedStringId,
 	}
 }
 
@@ -57,7 +62,24 @@ func GetTasks() Tasks {
 	return res
 }
 
-// TODO - add find one task by id method
+func AddTask(c echo.Context) (Task, error) {
+	db := DBcon.Database("GoDo")
+	coll := db.Collection("tasks")
+	taskname := c.FormValue("taskname")
+	desc := c.FormValue("description")
+	owner := c.FormValue("owner")
+	project := c.FormValue("project")
+	completed := c.FormValue("completed")
+	completedBool, _ := strconv.ParseBool(completed)
+	id := primitive.NewObjectID()
+	task := newTask(taskname, desc, owner, project, completedBool, id)
+	_, err := coll.InsertOne(context.TODO(), task)
+	if err != nil {
+		return Task{}, err
+	}
+
+	return task, nil
+}
 
 // TODO - add update task function
 

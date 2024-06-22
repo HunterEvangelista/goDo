@@ -1,19 +1,32 @@
+{{/*TODO - we are accidentally replacing the form when we submit a new task*/}}
 {{ block "form" .}}
-    <form hx-post="/contacts" hx-swap="outerHTML">
-        <label for="name">
-            Name: <input
-                    {{ if .Values.name }} value="{{ .Values.name }}" {{ end }}
-                    type="text" name="name" placeholder="Name"/>
-        </label>
-        <label for="email">
-            Email: <input
-                    {{/*                    TODO - figure out a placeholder format*/}}
-                    {{ if .Values.email  }} value="{{ .Values.email}}" {{ end }}
-                    type="text" name="email" placeholder="Email"/>
-            {{ if .Errors.email  }}
-                <div style="color: var(--accent-red)">{{ .Errors.email }}</div>
+    <form hx-post="/task" hx-swap="outerHTML">
+        <label for="taskname">
+            Task Name: <input
+                    {{ if .Values.taskname }} value="{{ .Values.taskname }}" {{ end }}
+                    type="text" name="taskname" placeholder="Task name"/>
+            {{ if .Errors.taskname  }}
+                <div style="color: var(--accent-red)">{{ .Errors.taskname }}</div>
             {{ end }}
-
+        </label>
+        <label for="project">
+            Project: <input
+                    {{ if .Values.email  }} value="{{ .Values.email}}" {{ end }}
+                    type="text" name="project" placeholder="Project"/>
+        </label>
+        <label for="Owner">
+            Owner: <input
+                    type="text" name="owner" placeholder="Owner"/>
+        </label>
+        <p>Completion Status</p>
+        <input type="radio" id="true" name="completed" value="true">
+        <label for="true">True</label>
+        <input type="radio" id="false" name="completed" value="false">
+        <label for="false">False</label>
+        <p>Task Description</p>
+        <label for="description">
+            <textarea name="description">
+            </textarea>
         </label>
         <button type="submit">Submit</button>
     </form>

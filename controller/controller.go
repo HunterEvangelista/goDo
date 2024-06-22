@@ -48,9 +48,20 @@ func NewPage() Page {
 	}
 }
 
+var page Page
+
 func HomeRoute(c echo.Context) error {
-	page := NewPage()
+	page = NewPage()
 	return c.Render(http.StatusOK, "index", page)
+}
+
+func CreateTask(c echo.Context) error {
+	task, err := model.AddTask(c)
+	if err != nil {
+		return c.String(http.StatusInternalServerError, err.Error())
+	}
+	page.Tasks = append(page.Tasks, task)
+	return c.Render(http.StatusOK, "oob-task", task)
 }
 
 func DeleteTaskRoute(c echo.Context) error {

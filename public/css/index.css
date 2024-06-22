@@ -1,3 +1,4 @@
+/*TODO - For some reason this is not updating in the client*/
 :root {
     /*primary colors*/
     --primary-blue: #0077FF;
@@ -35,4 +36,15 @@
 }
 .htmx-request.htmx-indicator {
     opacity: 1;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--accent-purple);
+}
+
+textarea {
+    width: 40%;
+    height: auto;
 }

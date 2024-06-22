@@ -9,9 +9,9 @@
 {{ end }}
 
 {{ block "task" . }}
-    <div id="task-{{ .ID }}" style="display: flex; ">
+    <div id="task-{{ .DisplayID }}" style="display: flex; ">
         <div class="task" style="display: flex;">
-            <div hx-indicator="#task-{{ .ID }}" hx-delete="/task/{{ .ID }}" hx-swap="outerHTML swap:500ms"
+            <div hx-indicator="#task-{{ .DisplayID }}" hx-delete="/task/{{ .DisplayID }}" hx-swap="outerHTML swap:500ms"
                  hx-target="closest .task" style="cursor: pointer; width: 24px; height: 24px">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path fill="none" d="M0 0h24v24H0z"/>
@@ -21,7 +21,7 @@
             Task Name: <span>{{ .TaskName }}</span>
             Project: <span>{{ .Project }}</span>
 
-            <div id="ci-{{ .ID }}" class="htmx-indicator" style="width: 24px; height: 24px">
+            <div id="ci-{{ .DisplayID }}" class="htmx-indicator" style="width: 24px; height: 24px">
                 <img src="/images/bar-chart-fill.svg"
                      alt="loading"
                      style="width: 24px; height: 24px">

@@ -55,6 +55,7 @@ func main() {
 	e.DELETE("/task/:id", controller.DeleteTaskRoute)
 
 	// TODO - add a route to add a new task
+	e.POST("/task", controller.CreateTask)
 
 	// TODO - add a route to modify the state of a task
 	// TODO - create separate pages for this to be done in
