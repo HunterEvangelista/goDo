@@ -2,25 +2,16 @@ package model
 
 import (
 	"context"
+	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"log"
+	"regexp"
 )
 
 //goland:noinspection SpellCheckingInspection
 var DBcon *mongo.Client
-
-// Collection Set up reference to Tasks collection
-type Collection struct {
-	Collection *mongo.Collection
-}
-
-func NewCollection(db *mongo.Database) *Collection {
-	return &Collection{db.Collection("tasks")}
-}
-
-var coll *Collection
 
 type Task struct {
 	TaskName    string
@@ -28,18 +19,22 @@ type Task struct {
 	Owner       string `bson:"owner,omitempty"`
 	Project     string `bson:"project,omitempty"`
 	// need to add date field
-	Completed bool
-	ID        primitive.ObjectID `bson:"_id"`
+	Completed bool   `bson:"completed"`
+	ID        string `bson:"_id"`
 }
 
-func newTask(taskName, description, owner, project string, completed bool, ID primitive.ObjectID) Task {
+func newTask(taskName, description, owner, project string, completed bool, ID string) Task {
+	// process id object to be string
+	re := regexp.MustCompile(`(ObjectID|\(|\))`)
+	parsedStringId := re.ReplaceAllString(ID, "")
+	fmt.Printf("ID: %s; parsedStringID: %s\n", ID, parsedStringId)
 	return Task{
 		TaskName:    taskName,
 		Description: description,
 		Owner:       owner,
 		Project:     project,
 		Completed:   completed,
-		ID:          ID,
+		ID:          parsedStringId,
 	}
 }
 
@@ -65,9 +60,8 @@ type Tasks []Task
 
 func GetTasks() Tasks {
 	db := DBcon.Database("GoDo")
-	coll = NewCollection(db)
-
-	cursor, err := coll.Collection.Find(context.TODO(), bson.D{})
+	coll := db.Collection("tasks")
+	cursor, err := coll.Find(context.TODO(), bson.D{})
 	if err != nil {
 		log.Panicf("Error getting tasks: %s\n", err)
 	}
@@ -89,4 +83,14 @@ func GetTasks() Tasks {
 
 // TODO - add update task function
 
-// TODO - add delete task function
+func DeleteTask(id string) (string, error) {
+	db := DBcon.Database("GoDo")
+	coll := db.Collection("tasks")
+	oId, err := primitive.ObjectIDFromHex(id)
+	filter := bson.D{{"_id", oId}}
+	_, err = coll.DeleteOne(context.TODO(), filter)
+	if err != nil {
+		return "", err
+	}
+	return "Task deleted", nil
+}

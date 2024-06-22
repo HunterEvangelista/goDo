@@ -2,7 +2,7 @@
     <div id="tasks" style="display: flex; flex-direction: column; ">
         {{ range .  }}
             <div>
-                {{ template "task" .}}
+                {{ template "task" . }}
             </div>
         {{ end }}
     </div>

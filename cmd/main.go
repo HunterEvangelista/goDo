@@ -52,6 +52,8 @@ func main() {
 
 	e.GET("/", controller.HomeRoute)
 
+	e.DELETE("/tasks/:id", controller.DeleteTaskRoute)
+
 	//e.POST("/contacts", func(c echo.Context) error {
 	//name := c.FormValue("name")
 	//email := c.FormValue("email")
