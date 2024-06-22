@@ -54,11 +54,11 @@ func main() {
 
 	e.DELETE("/task/:id", controller.DeleteTaskRoute)
 
-	// TODO - add a route to add a new task
 	e.POST("/task", controller.CreateTask)
 
-	// TODO - add a route to modify the state of a task
-	// TODO - create separate pages for this to be done in
+	e.GET("/task/:id", controller.UpdateTask)
+	// TODO - create route to process updated task submission
+	//e.POST("/task/:id", controller.SubmitUpdate)
 
 	if err = e.Start(":8080"); !errors.Is(err, http.ErrServerClosed) {
 		log.Fatal(err)

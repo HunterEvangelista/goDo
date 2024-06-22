@@ -11,6 +11,7 @@
         <div class="selectors">
             <div
                     class="selector edit"
+                    hx-get="/task/{{ .DisplayID }}"
                     hx-indicator="#task-{{ .DisplayID }}"
                     hx-swap="outerHTML swap:500ms"
                     hx-target="closest .task"
