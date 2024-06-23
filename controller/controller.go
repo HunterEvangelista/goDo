@@ -71,6 +71,16 @@ func UpdateTask(c echo.Context) error {
 	return c.Render(http.StatusOK, "taskUpdate", task)
 }
 
+// SubmitTaskUpdate process the update form, modifies the record in remote storage,
+// and renders updated information to the client.
+func SubmitTaskUpdate(c echo.Context) error {
+	task, err := model.UpdateTask(c)
+	if err != nil {
+		return c.NoContent(http.StatusBadRequest)
+	}
+	return c.Render(http.StatusOK, "task", task)
+}
+
 func DeleteTaskRoute(c echo.Context) error {
 	_, err := model.DeleteTask(c.Param("id"))
 	if err != nil {

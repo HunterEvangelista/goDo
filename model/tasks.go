@@ -30,7 +30,6 @@ type Tasks []Task
 
 func (t Tasks) GetByDisplayID(displayID string) (Task, error) {
 	for i := 0; i < len(t); i++ {
-		fmt.Printf("DisplayID: %v; Param(ID): %v\n", t[i].DisplayID, displayID)
 		if t[i].DisplayID == displayID {
 			return t[i], nil
 		}
@@ -92,21 +91,31 @@ func AddTask(c echo.Context) (Task, error) {
 	return task, nil
 }
 
-//func UpdateTask(c echo.Context) (Task, error) {
-//	db := DBcon.Database("GoDo")
-//	coll := db.Collection("tasks")
-//	taskname := c.FormValue("taskname")
-//	desc := c.FormValue("description")
-//	owner := c.FormValue("owner")
-//	project := c.FormValue("project")
-//	completed := c.FormValue("completed")
-//	completedBool, _ := strconv.ParseBool(completed)
-//	id, _ := primitive.ObjectIDFromHex(c.FormValue("DisplayID"))
-//	task := newTask(taskname, desc, owner, project, completedBool, id)
-//
-//	filter := bson.D{{"_id", id}}
-//
-//}
+// UpdateTask process a client task update and replaces an existing BSON document
+// in the remote database.
+func UpdateTask(c echo.Context) (Task, error) {
+	db := DBcon.Database("GoDo")
+	coll := db.Collection("tasks")
+	taskname := c.FormValue("taskname")
+	desc := c.FormValue("description")
+	owner := c.FormValue("owner")
+	project := c.FormValue("project")
+	completed := c.FormValue("completed")
+	completedBool, _ := strconv.ParseBool(completed)
+	displayID := c.Param("id")
+	id, _ := primitive.ObjectIDFromHex(displayID)
+	task := newTask(taskname, desc, owner, project, completedBool, id)
+	update := bson.D{{"$set", bson.D{
+		{"taskname", taskname},
+		{"owner", owner},
+		{"project", project},
+		{"completed", completedBool},
+		{"description", desc},
+	}}}
+	filter := bson.D{{"_id", task.ID}}
+	coll.UpdateOne(context.TODO(), filter, update)
+	return task, nil
+}
 
 func DeleteTask(id string) (string, error) {
 	db := DBcon.Database("GoDo")

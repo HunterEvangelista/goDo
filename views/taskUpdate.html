@@ -1,8 +1,7 @@
 {{ block "taskUpdate" .}}
     <form
-        hx-post="/task/:{{ .DisplayID }}"
+        hx-post="/task/{{ .DisplayID }}"
         hx-swap="outerHTML"
-        class="task"
     >
         <label for="taskname">
             Task Name: <input
@@ -16,6 +15,13 @@
                     value="{{ .Project }}"
                     type="text"
                     name="project"
+            >
+        </label>
+        <label for="owner">
+            Owner: <input
+                    value="{{ .Owner }}"
+                    type="text"
+                    name="owner"
             >
         </label>
         <span>Completion Status</span>

@@ -57,8 +57,8 @@ func main() {
 	e.POST("/task", controller.CreateTask)
 
 	e.GET("/task/:id", controller.UpdateTask)
-	// TODO - create route to process updated task submission
-	//e.POST("/task/:id", controller.SubmitUpdate)
+
+	e.POST("/task/:id", controller.SubmitTaskUpdate)
 
 	if err = e.Start(":8080"); !errors.Is(err, http.ErrServerClosed) {
 		log.Fatal(err)
