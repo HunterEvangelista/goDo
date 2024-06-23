@@ -64,12 +64,11 @@ func CreateTask(c echo.Context) error {
 
 // UpdateTask responds with a form for the user to edit the selected task
 func UpdateTask(c echo.Context) error {
-	// going to send the form to submit a task update with this
-	// need to get the task from the Tasks
-	// render the form template
-	// populate it with the task being edited
-	// send it
-	return c.NoContent(http.StatusOK)
+	task, err := page.Tasks.GetByDisplayID(c.Param("id"))
+	if err != nil {
+		return c.NoContent(http.StatusNotFound)
+	}
+	return c.Render(http.StatusOK, "taskUpdate", task)
 }
 
 func DeleteTaskRoute(c echo.Context) error {

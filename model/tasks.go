@@ -28,16 +28,20 @@ type Task struct {
 
 type Tasks []Task
 
-func (*Tasks) GetByDisplayID(displayID string) Task {
-	// TODO - iterate through the tasks and return the one that matches the id
+func (t Tasks) GetByDisplayID(displayID string) (Task, error) {
+	for i := 0; i < len(t); i++ {
+		fmt.Printf("DisplayID: %v; Param(ID): %v\n", t[i].DisplayID, displayID)
+		if t[i].DisplayID == displayID {
+			return t[i], nil
+		}
+	}
+	return Task{}, fmt.Errorf("task not found")
 }
 
 func newTask(taskName, description, owner, project string, completed bool, ID primitive.ObjectID) Task {
 	re := regexp.MustCompile(`(ObjectID|\(|\)|[\!\-\&\;\:\.\,\#\"\']*)`)
 	stID := primitive.ObjectID.String(ID)
 	parsedStringId := re.ReplaceAllString(stID, "")
-	fmt.Println(stID)
-	fmt.Println(parsedStringId)
 	return Task{
 		TaskName:    taskName,
 		Description: description,
@@ -88,21 +92,21 @@ func AddTask(c echo.Context) (Task, error) {
 	return task, nil
 }
 
-func UpdateTask(c echo.Context) (Task, error) {
-	db := DBcon.Database("GoDo")
-	coll := db.Collection("tasks")
-	taskname := c.FormValue("taskname")
-	desc := c.FormValue("description")
-	owner := c.FormValue("owner")
-	project := c.FormValue("project")
-	completed := c.FormValue("completed")
-	completedBool, _ := strconv.ParseBool(completed)
-	id, _ := primitive.ObjectIDFromHex(c.FormValue("DisplayID"))
-	task := newTask(taskname, desc, owner, project, completedBool, id)
-
-	filter := bson.D{{"_id", id}}
-
-}
+//func UpdateTask(c echo.Context) (Task, error) {
+//	db := DBcon.Database("GoDo")
+//	coll := db.Collection("tasks")
+//	taskname := c.FormValue("taskname")
+//	desc := c.FormValue("description")
+//	owner := c.FormValue("owner")
+//	project := c.FormValue("project")
+//	completed := c.FormValue("completed")
+//	completedBool, _ := strconv.ParseBool(completed)
+//	id, _ := primitive.ObjectIDFromHex(c.FormValue("DisplayID"))
+//	task := newTask(taskname, desc, owner, project, completedBool, id)
+//
+//	filter := bson.D{{"_id", id}}
+//
+//}
 
 func DeleteTask(id string) (string, error) {
 	db := DBcon.Database("GoDo")
